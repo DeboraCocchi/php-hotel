@@ -45,10 +45,6 @@
   ];
   $park = $_GET['parcheggio'];
   $rating = $_GET['voto'];
-  var_dump($park);
-  var_dump(empty($park));
-  var_dump($rating);
-
 ?>
 
 <!DOCTYPE html>
@@ -93,7 +89,7 @@
 <body>
   <h1>Scegli il tuo Hotel</h1>
 
-  <form action="./index.php" method="GET">
+  <form  method="GET">
     <div class="m-auto d-flex justify-content-center">
       <select name="parcheggio" class="form-select dc-sel" aria-label="Default select example">
           <option value="" selected>Parcheggio Int.</option>
@@ -128,11 +124,11 @@
         </tr>
       <?php endforeach; ?>
   <?php } else{ ?>
-        <?php foreach($hotels as $key => $value){?>
-          <?php if($value['parking']==$park && $value['vote']>=$rating) {?>
+        <?php foreach($hotels as $key => $hotel){?>
+          <?php if($hotel['parking']==$park && $hotel['vote']>=$rating) {?>
           <tr>
           <th scope="row"><?php echo $hotel['name'] ;?></th>
-          <td><?php echo ($hotel['parking']);?></td>
+          <td><?php echo ($hotel['parking'])? 'Sì' : 'No';?></td>
           <td><?php echo $hotel['vote'] ;?></td>
           <td><?php echo $hotel['distance_to_center'] ;?></td>
           </tr>
