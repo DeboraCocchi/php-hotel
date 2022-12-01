@@ -35,7 +35,20 @@
       'vote' => 2,
       'distance_to_center' => 50
   ],
-];
+  [
+      'name' => 'Hotel Rimini',
+      'description' => 'Hotel Rimini Descrizione',
+      'parking' => true,
+      'vote' => 3,
+      'distance_to_center' => 0.8
+  ],
+  ];
+  $park = $_GET['parcheggio'];
+  $rating = $_GET['voto'];
+  var_dump($park);
+  var_dump(empty($park));
+  var_dump($rating);
+
 ?>
 
 <!DOCTYPE html>
@@ -56,10 +69,10 @@
     h1{
       text-align:center;
       margin:20px auto;
-      color:brown;
+      color:cornflowerblue;
     }
     th[scope="col"]{
-      color:brown;
+      color:cornflowerblue;
       font-weight:bold;
       width:calc(100% / 4);
     }
@@ -67,13 +80,36 @@
       margin:20px auto;
       width: 70%;
     }
+    form>div{
+      width:70%;
+    }
+    .dc-sel, .dc-btn, .dc-num{
+      width:18%;
+      margin:0 18px;
+    }
   </style>
   <title>Hotels</title>
 </head>
 <body>
-<h1>Scegli il tuo Hotel</h1>
-<table class="table table-striped dc-table">
-<thead>
+  <h1>Scegli il tuo Hotel</h1>
+
+  <form action="./index.php" method="GET">
+    <div class="m-auto d-flex justify-content-center">
+      <select name="parcheggio" class="form-select dc-sel" aria-label="Default select example">
+          <option value="" selected>Parcheggio Int.</option>
+          <option value="1">Sì</option>
+          <option value="0">No</option>
+      </select>
+      <input type="number" name="voto" class="form-control dc-num" id="exampleFormControlInput1" placeholder="Voto min">
+      <button class="btn btn-info dc-btn" type="submit">Invia</button>
+      <input class="btn btn-warning dc-btn" type="reset" value="Reset">
+    </div>
+      
+  </form>
+
+
+  <table class="table table-striped dc-table">
+  <thead>
     <tr>
       <th scope="col">Nome</th>
       <th scope="col">Parcheggio Interno</th>
@@ -82,14 +118,27 @@
     </tr>
   </thead>
   <tbody>
+  <?php if((empty($park) && empty($rating))){ ;?>
       <?php foreach($hotels as $hotel):?>
         <tr>
-        <th scope="row"><?php echo $hotel['name'] ?></th>
+        <th scope="row"><?php echo $hotel['name'] ;?></th>
         <td><?php echo ($hotel['parking'])? 'Sì' : 'No';?></td>
         <td><?php echo $hotel['vote'] ?></td>
-        <td><?php echo $hotel['distance_to_center'] ?></td>
+        <td><?php echo $hotel['distance_to_center'] ;?></td>
         </tr>
       <?php endforeach; ?>
+  <?php } else{ ?>
+        <?php foreach($hotels as $key => $value){?>
+          <?php if($value['parking']==$park && $value['vote']>=$rating) {?>
+          <tr>
+          <th scope="row"><?php echo $hotel['name'] ;?></th>
+          <td><?php echo ($hotel['parking']);?></td>
+          <td><?php echo $hotel['vote'] ;?></td>
+          <td><?php echo $hotel['distance_to_center'] ;?></td>
+          </tr>
+      <?php }  }} ?>
+      
+  
       </tbody>
 
 </body>
